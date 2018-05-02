@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+    #list {
+      background-color: #36D7B7;
+
+    }
+    img{
+       height: 200px;
+       width: 300px; 
+    }
+  </style>
+  <script src="jquery.js">
+  
+  </script>
+  <ul id="list"></ul>
+
+  <script type="text/javascript">
+  $.ajax({
+    type:'GET',
+    dataType:'json',
+    url:'http://127.0.0.1:8000/posts/',
+    success:function(data){
+      console.log(data)
+      var posts = $('#list')
+      for (var i = 0; i < data.length; i++) {
+        console.log(data[i]);
+        var list = (data[i]);
+        console.log(list);
+        posts.append('<li>'+list.title+'</li>','<li>'+list.subtitle+'</li>','<img src="'+list.banner_photo+'">','<li>'+list.blog+'</li>','<li>'+list.date_created+'</li>', '<li>'+list.date_modified+'</li>', '<li>'+list.tags+'</li>', '<li>'+list.category+'</li>', '<li>'+list.body+'</li>', '<li>'+list.status+'</li>');
+    }
+      
+    }})
+  </script>
+<body>
+
+</body>
+</head>
+</html>

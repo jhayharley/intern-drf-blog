@@ -52,4 +52,4 @@ class Post(models.Model):
     status           = models.CharField(max_length=9, choices=STATUS_CHOICES, blank=True, default=True)
 
     def __str__(self):
-        return '{}'.format(self.user)
+        return '{}'.format(self.title)

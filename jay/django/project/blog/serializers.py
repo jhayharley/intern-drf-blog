@@ -1,19 +1,46 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import Anime, Breed, Website
+from .models import Blog, Tag, Category, Comment, Post
 
-class AnimeSerializer(serializers.HyperlinkedModelSerializer):
+class BlogSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Anime
-        fields = ('title', 'description', 'director', 'release_date', 'score','picture')
+        model = Blog
+        fields = ('heading',
+        'sub_heading')
 
-class BreedSerializer(serializers.HyperlinkedModelSerializer):
+class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Breed
-        fields = ('name', 'description', 'country', 'is_official')
+        model = Tag
+        fields = ('title',
+        'date_created',
+        'date_modified')
 
-class WebsiteSerializer(serializers.HyperlinkedModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Website
-        fields = ('name', 'link', 'owner', 'logo')
+        model = Category
+        fields = ('title',
+        'date_created',
+        'date_modified')
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('post',
+        'date_created',
+        'author',
+        'text')
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('title',
+        'subtitle',
+        'banner_photo',
+        'blog',
+        'date_created',
+        'date_modified',
+        'tags',
+        'category',
+        'body',
+        'status')
 
