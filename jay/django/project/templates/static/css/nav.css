@@ -1,0 +1,29 @@
+.topnav {
+    background-color: #F62459;
+    overflow: hidden;
+}
+.topnav a {
+    display: block;
+    color: #f2f2f2;
+    text-align: left;
+    text-decoration: none;
+    font-size: 27px;
+}
+.active{
+    background-color: #F62459;
+    overflow: hidden;
+}
+.topnav .icon{
+    display: none;
+}
+.topnav.responsive a{
+    display: block;
+    text-align: right;
+}
+.user{
+    color: green;
+    margin-left: 500px;
+}
+.out{
+    float: right;
+}

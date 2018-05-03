@@ -1,8 +1,9 @@
-from django.contrib.auth.models import User, Group
+#from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from .models import Blog, Tag, Category, Comment, Post
 
 class BlogSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Blog
         fields = ('heading',
@@ -31,6 +32,14 @@ class CommentSerializer(serializers.ModelSerializer):
         'text')
 
 class PostSerializer(serializers.ModelSerializer):
+#    blog = serializers.SerializerRelatedField()
+
+    category_name = serializers.SerializerMethodField()
+
+    tags = serializers.StringRelatedField(
+        many=True
+        )
+
     class Meta:
         model = Post
         fields = ('title',
@@ -38,9 +47,13 @@ class PostSerializer(serializers.ModelSerializer):
         'banner_photo',
         'blog',
         'date_created',
+        'category_name',
         'date_modified',
         'tags',
         'category',
         'body',
         'status')
+
+    def get_category_name(self, instance):
+        return instance.category.title
 

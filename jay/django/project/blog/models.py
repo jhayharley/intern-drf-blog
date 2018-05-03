@@ -25,7 +25,7 @@ class Category(models.Model):
         return '{}'.format(self.title)
 
 class Comment(models.Model):
-    post             = models.ForeignKey('Post', on_delete=models.CASCADE, null=True, blank=True)
+    post             = models.ForeignKey('Post', on_delete=models.CASCADE)
     date_created     = models.DateTimeField(auto_now_add=True)
     author           = models.CharField(max_length=120)
     text             = models.TextField()

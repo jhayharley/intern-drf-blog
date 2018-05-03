@@ -1,0 +1,63 @@
+.card{
+    background-color: #1abc9c;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-origin: all;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 1500px;
+    margin-top: 20px;
+    transition: 3s;
+    border-radius: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom:200px;
+}
+.comment {
+    margin: 20px 0px 20px 20px;
+}
+p{
+    font-family: 'Frijole', cursive;
+    font-size: 17px;
+}
+body{
+    font-family: 'Emilys Candy', cursive;
+    font-size: 21px;
+}
+.heading{
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: green;
+    font-weight: 400;
+    line-height: 1.4em;
+    transition: 5s;
+    text-align: center;
+    margin-bottom: 0px;
+}
+.sub_heading{
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: red;
+    font-weight: 400;
+    line-height: 1.4em;
+    transition: 5s;
+    text-align: center;
+    margin-bottom: 0px;
+}
+.tags{
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    color: red;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0px;
+}
+img{
+    width: 400px;
+    height: 370px;
+    float: right;
+}

@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/navs.css' %}">
+    <div id="navbar">
+      <div class="topnav" id="TopNav">
+        <a href='{% url "blog:post" %}' class="active">Home</a>
+      <div>{% if user.i_authenticated %}
+        {% if request.user.is_active %}
+          <a href='{% url "user" user.id %}' class="user">{{ user.username}}</a>
+          <a href='{% url "logout" %}'><span>Logout</span></a>
+          {% endif %}
+          {%  else %}
+            <a class="out" href='{% url "login" %}'>Logout</a>
+            <a href="{% url 'blog:post_add' %}">Add Post</a>
+            <!-- <a href="{% url 'blog:draft' %}">draft</a> -->
+          {% endif %}
+      </div>
+      </div>
+    </div>
+</html>

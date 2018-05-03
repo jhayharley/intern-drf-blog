@@ -1,12 +1,12 @@
-from blog.models import Post
 from rest_framework.renderers import TemplateHTMLRenderer
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.parsers import JSONParser
 from .models import Blog, Tag, Category, Comment, Post
-from blog.serializers import BlogSerializer, TagSerializer, CategorySerializer, CommentSerializer, PostSerializer 
+from .serializers import BlogSerializer, TagSerializer, CategorySerializer, CommentSerializer, PostSerializer 
 
 
 class BlogViewSet(viewsets.ViewSet):
@@ -17,6 +17,13 @@ class BlogViewSet(viewsets.ViewSet):
       queryset = Blog.objects.all()
       serializer = BlogSerializer(queryset, many=True)
       return Response(serializer.data)
+
+    def create(self, request, format=None):
+      serializer = BlogSerializer(data=request.data)
+      if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):
       queryset = Blog.objects.all()
@@ -33,11 +40,13 @@ class TagViewSet(viewsets.ViewSet):
       serializer = TagSerializer(queryset, many=True)
       return Response(serializer.data)
 
-    def retrieve(self, request, pk=None):
-      queryset = Tag.objects.all()
-      tag = get_object_or_404(queryset, pk=pk)
-      serializer = TagSerializer(tag)
-      return Response(serializer.data)
+    def create(self, request, format=None):
+      serializer = TagSerializer(data=request.data)
+      if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CategoryViewSet(viewsets.ViewSet):
     """
@@ -48,11 +57,12 @@ class CategoryViewSet(viewsets.ViewSet):
       serializer = CategorySerializer(queryset, many=True)
       return Response(serializer.data)
 
-    def retrieve(self, request, pk=None):
-      queryset = Category.objects.all()
-      category = get_object_or_404(queryset, pk=pk)
-      serializer = CategorySerializer(category)
-      return Response(serializer.data)
+    def create(self, request, format=None):
+      serializer = CategorySerializer(data=request.data)
+      if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CommentViewSet(viewsets.ViewSet):
@@ -64,26 +74,22 @@ class CommentViewSet(viewsets.ViewSet):
       serializer = CommentSerializer(queryset, many=True)
       return Response(serializer.data)
 
-    def retrieve(self, request, pk=None):
-      queryset = Comment.objects.all()
-      comment = get_object_or_404(queryset, pk=pk)
-      serializer = CommentSerializer(comment)
-      return Response(serializer.data)
-
-
 class PostViewSet(viewsets.ViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
     def list(self, request):
       queryset = Post.objects.all()
-      serializer = PostSerializer(queryset, many=True)
+      serializer_context = {'request': request,}
+      serializer = PostSerializer(queryset, many=True, context=serializer_context)
       return Response(serializer.data)
 
-    def create(self, request):
-      queryset = Blog.objects.all()
-      serializer = BlogSerializer(queryset, many=True)
-      return Response(serializer.data)
+    def create(self, request, format=None):
+      serializer = PostSerializer(data=request.data)
+      if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):
       queryset = Post.objects.all()
@@ -103,3 +109,31 @@ class PostViewSet(viewsets.ViewSet):
       post = self.get_object(pk)
       post.delete()
       return Response(status=status.HTTP_204_NO_CONTENT)
+
+#class PostView(APIView):
+
+#    parser_classes = (JSONParser,)
+
+#    def post(self, request, format=None):
+#        return Response({ 'received data': request.data})
+
+#class PostList(APIView):
+    """
+    List all users, or create a new user.
+    """
+#    def get(self, request, format=None):
+#         posts = Post.objects.all()
+#         serializer = PostSerializer(post, many=True)
+#         return Response(serializer.data)
+
+#    def post(self, request, format=None):
+#         serializer = PostSerializer(data=request.DATA)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#    def delete(self, request, pk, format=None):
+#         post = self.get_object(pk)
+#         post.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
