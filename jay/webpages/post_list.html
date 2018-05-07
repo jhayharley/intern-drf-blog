@@ -1,41 +1,79 @@
 <!DOCTYPE html>
 <html>
+<title>Post Lists</title>
 <head></head>
-    <style type="text/css">
-    #list {
-      background-color: #2ABB9B;
-    }
-    img{
-       height: 200px;
-       width: 300px; 
-    }
-
+<link href="https://fonts.googleapis.com/css?family=Yeon+Sung" rel="stylesheet">
+  <style type="text/css">
+#list{
+  background-color: #4ECDC4;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+  max-width: 3000px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  margin-right: 45px;
+  margin-left:45px;
+  float: left;
+  transition: 2s;
+  border-radius: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom:20px;
+}
+img{
+  float: center;
+  height: 300px;
+  width: 300px; 
+  margin-left: 500px;
+}
+p{
+  text-align: center;
+  font-family: 'Yeon Sung', cursive;
+  font-size: 20px;
+  text-align: center;
+}
+h1{
+  text-align: center;
+}
+h2{
+  text-align: center;
+}
   </style>
-  <ul id="list"></ul>
-  <script src="jquery.js">
   
-  </script>
-  <script type="text/javascript">
-  $.ajax({
-    type:'GET',
-    dataType:'json',
-    url:'http://127.0.0.1:8000/posts/',
-    success:function(data){
-      console.log(data)
-      var mylist = $('#list')
-      for (var i = 0; i < data.length ; i++) {
-        console.log(data[i]);
-        var list = (data[i]);
-        console.log(list);
+    <ul id="list"></ul>
+    <script src="jquery.js">
 
-        mylist.append('<li>'+list.title+'</li>','<li>'+list.subtitle+'</li>','<img src="'+list.banner_photo+'">','<li>'+list.blog+'</li>','<li>'+list.date_created+'</li>', '<li>'+list.date_modified+'</li>', '<li>'+list.tags+'</li>', '<li>'+list.category+'</li>', '<li>'+list.body+'</li>', '<li>'+list.status+'</li>');
+  
+    </script>
+      <script type="text/javascript">
+
+        $.ajax({
+          type:'GET',
+            dataType:'json',
+              url:'http://127.0.0.1:8000/posts/',
+                success:function(data){
+                  console.log(data)
+                  var mylist = $('#list')
+                  for (var i = 0; i < data.length ; i++) {
+                    console.log(data[i]);
+                    var list = (data[i]);
+                    console.log(list);
+                    mylist.append(
+
+                      '<h1>'+list.title+'</h1>',
+                      '<h1>'+list.subtitle+'</h1>',
+                      '<img src="'+list.banner_photo+'">',
+                      '<p>'+list.blog+'</p>',
+                      '<p>'+list.date_created+'</p>',
+                      '<p>'+list.date_modified+'</p>',
+                      '<p>'+list.tags+'</p>',
+                      '<p>'+list.category+'</p>',
+                      '<h2>'+list.body+'</h2>',
+                      '<p>'+list.status+'</p>');
+      }
     }
-      
-    }})
-  </script>
-</div>
-<body>
-
-</body>
+  }
+)
+    </script>
+  </div>
 
 </html>

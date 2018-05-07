@@ -1,4 +1,8 @@
+import os
+
 from django.db import models
+from versatileimagefield.fields import VersatileImageField
+from versatileimagefield.placeholder import OnStoragePlaceholderImage
 
 # Create your models here.
 class Blog(models.Model):
@@ -40,9 +44,9 @@ STATUS_CHOICES = (
 )
 
 class Post(models.Model):
-    title            = models.CharField(max_length=120)
-    subtitle         = models.CharField(max_length=120)
-    banner_photo     = models.ImageField(upload_to = 'static/media')
+    title            = models.CharField(max_length=200)
+    subtitle         = models.CharField(max_length=200)
+    banner_photo     = VersatileImageField('Image', upload_to = 'static/media')
     blog             = models.ForeignKey(Blog, on_delete=models.CASCADE)
     date_created     = models.DateTimeField(auto_now_add=True)
     date_modified    = models.DateTimeField(auto_now_add=True)

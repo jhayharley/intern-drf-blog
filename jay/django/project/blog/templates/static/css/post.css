@@ -1,0 +1,25 @@
+.container{
+    background-color: #95A5A6;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-right: 25px;
+    margin-left:45px;
+    float: left;
+    transition: 2s;
+    border-radius: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom:20px;
+}
+p{
+    font-family: 'Emilys Candy', cursive;
+    font-size: 15px;
+    text-align: center;
+}
+img{
+    width: 250px;
+    height: 150px;
+    float: center;
+}

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'versatileimagefield',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +63,9 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
+#        'rest_framework.parsers.JSONParser',
+#        'rest_framework.parsers.FormParser',
+#        'rest_framework.parsers.MultiPartParser',
     ]
 }
 

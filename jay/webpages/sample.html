@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>Form Ajax Tutorial</title>
+<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+//After the document has loaded, it adds the following handlers
+//to the web page.
+$(document).ready(function() {
+//When the form with id="myform" is submitted...
+$("#myform").submit(function() {
+     //Send the serialized data to formProcessor.php.
+     $.post("formProcessor.php", $("#myform").serialize(),
+     //Take our repsonse, and replace whatever is in the "formResponse"
+     //div with it.
+    function(data) {
+          $("#formResponse").html(data);
+     }
+);
+return false;
+});
+});
+</script>
+<head>
+<body>
+<h2>Form Ajax Tutorial</h2>
+<p>Fill out some information</p>
+<form id="myform">
+<input type="text" name="firstName" value="" /><br />
+<input type="text" name="lastName" value="" /><br />
+<input type="submit" name="submit" value="Submit" />
+</form>
+<div id="formResponse">
+</div>
+</body>
+</html>

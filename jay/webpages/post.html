@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+
+  <head>
+    <script src="jquery.js"></script>
+    <title>Add Post</title>
+  </head>
+
+  <style type="text/css">
+#list{
+  background-color: #4ECDC4;
+}
+.card{
+    background-color: #4ECDC4;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+    max-width: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 25px;
+    margin-left:25px;
+    transition: 2s;
+    border-radius: 30px;
+    padding-left: 20px;
+    padding-right: 180px;
+    padding-bottom:20px;
+    float: left;
+}
+p{
+  text-align: center;
+}
+h1{
+  text-align: center;
+}
+h2{
+  text-align: center;
+  font-size: 32px;
+}
+
+</style>
+  <body>
+    <!-- <div id="container-postlist"></div>
+    <div id="container-tags"></div> -->
+    <!--div id="container-category"></div -->
+    <!-- <div id="container-postdetail"></div> -->
+    <!-- <div id="container-postcreate"></div> -->
+<div class="card">
+  <div class="container">
+    <form  method="POST" id="postform" enctype="multipart/form-data">
+      <h2 class="form-signin-heading">Welcome, Add some post here</h2>
+
+      <div>
+        <label for="inputtitle" class="sr-only">Title</label>
+        <input type="text" name="title" class="form-control" placeholder="" required autofocus>
+      </div>
+
+      <div>
+        <label for="inputsub_title" class="sr-only">Sub Title</label>
+        <input type="text" name="subtitle" class="form-control" placeholder="" required autofocus>
+      </div>
+
+      <div>
+        <label for="inputblog" class="sr-only">Blog</label>
+        <input type="text" name="blog" class="form-control" placeholder="" required autofocus>
+      </div>
+
+      <div class="thumbnails" style="width:400px;">
+        <label class="cabinet BrandHeader">Banner Photo</label>
+        <input type="file" class="file" name="banner_photo" id="test">
+      </div>
+
+      <div>
+        <label class="cabinet BrandHeader">Body</label>
+        <textarea class="form-control" name="body" placeholder="" required autofocus></textarea>
+      </div>
+      
+      <div>
+        <label for="inputcategory" class="sr-only">Category</label>
+        <input type="text" name="category" class="form-control"  required autofocus>
+      </div>
+      
+      <div>
+        <label for="inputtags" class="sr-only">Tags</label>
+        <input type="text" name="tags" class="form-control"  required autofocus>
+      </div>
+
+      <div>
+        <label for="inputstatus" class="sr-only">Status</label>
+        <input type="text" name="status" class="form-control"  required autofocus>
+      </div>
+
+      <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+  
+
+<span id="result"></span>
+
+<script src="http://malsup.github.com/jquery.form.js"></script> 
+<script type="text/javascript">
+
+
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = jQuery.trim(cookies[i]);
+        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+          }
+        }
+    }
+    return cookieValue;
+  }
+  
+
+
+  $('#submit').on('click', function (e) {
+    e.preventDefault();
+
+    $('#postform').ajaxSubmit({
+      url: 'http://127.0.0.1:8000/posts/',
+      type: 'POST',
+      success : function (resp) { console.log(resp); },
+      error : function (resp) { console.log(resp); }
+    });
+
+  });
+
+  
+// $("#submit").click(function(e) {
+// e.preventDefault();
+// var csrftoken = getCookie('csrftoken');
+
+// var title = $('#inputtitle').val();
+// var subtitle = $('#inputsub_title').val();
+// var banner_photo = $('#banner_photo').val();
+// var body = $('#inputbody').val();
+// var blog = $('#inputblog').val();
+// var category = $('#inputcategory').val();
+// var tags = $('#inputtags').val();
+// var status = $('#inputstatus').val();
+
+// $.ajax({
+//   url : 'http://127.0.0.1:8000/posts/',
+//   type : "POST",
+//   data : { 
+//     csrfmiddlewaretoken : csrftoken,
+//     title : title,
+//     subtitle : subtitle,
+//     banner_photo : banner_photo,
+//     body : body,
+//     blog : blog,
+//     category : category,
+//     tags : tags,
+//     status : status
+//   },
+//   success : function(response) {
+//     console.log(response);
+//     alert('Post Added');
+//     },
+// error : function(xhr,errmsg,err) {
+// console.log(xhr.status + ": " + xhr.responseText);
+// }
+// });
+// });
+  </script>
+</body>
+
+</html>
