@@ -40,7 +40,7 @@ class CommentSerializer(serializers.ModelSerializer):
         )
 
 class PostSerializer(serializers.ModelSerializer):
-#    banner_photo = serializers.FileField(required=True)
+#    blog_name = serializers.SerializerMethodField()
     date_display = serializers.SerializerMethodField()
     category_name = serializers.SerializerMethodField()
     timesince = serializers.SerializerMethodField()
@@ -53,6 +53,7 @@ class PostSerializer(serializers.ModelSerializer):
             'subtitle',
             'banner_photo',
             'blog',
+#            'blog_name',
             'date_created',
             'category_name',
             'date_modified',
@@ -66,6 +67,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_category_name(self, instance):
         return instance.category.title
+
+#    def get_blog_name(self, instance):
+#        return instance.blog.heading
 
     def get_date_display(self, instance):
         return instance.date_created.strftime("%b d%, | at %M %p")

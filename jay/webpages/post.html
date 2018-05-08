@@ -126,48 +126,10 @@ h2{
       url: 'http://127.0.0.1:8000/posts/',
       type: 'POST',
       success : function (resp) { console.log(resp); },
-      error : function (resp) { console.log(resp); }
+      error : function (resp) { console.log(resp); },
     });
-
+    $("#postform")[0].reset();
   });
-
-  
-// $("#submit").click(function(e) {
-// e.preventDefault();
-// var csrftoken = getCookie('csrftoken');
-
-// var title = $('#inputtitle').val();
-// var subtitle = $('#inputsub_title').val();
-// var banner_photo = $('#banner_photo').val();
-// var body = $('#inputbody').val();
-// var blog = $('#inputblog').val();
-// var category = $('#inputcategory').val();
-// var tags = $('#inputtags').val();
-// var status = $('#inputstatus').val();
-
-// $.ajax({
-//   url : 'http://127.0.0.1:8000/posts/',
-//   type : "POST",
-//   data : { 
-//     csrfmiddlewaretoken : csrftoken,
-//     title : title,
-//     subtitle : subtitle,
-//     banner_photo : banner_photo,
-//     body : body,
-//     blog : blog,
-//     category : category,
-//     tags : tags,
-//     status : status
-//   },
-//   success : function(response) {
-//     console.log(response);
-//     alert('Post Added');
-//     },
-// error : function(xhr,errmsg,err) {
-// console.log(xhr.status + ": " + xhr.responseText);
-// }
-// });
-// });
   </script>
 </body>
 
