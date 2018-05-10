@@ -1,35 +1,13 @@
+from django.shortcuts import render
 from rest_framework.renderers import TemplateHTMLRenderer
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
-from .models import Blog, Tag, Category, Comment, Post
-from .serializers import BlogSerializer, TagSerializer, CategorySerializer, CommentSerializer, PostSerializer 
+from .models import Tag, Category, Comment, Post
+from .serializers import TagSerializer, CategorySerializer, CommentSerializer, PostSerializer 
 
-
-class BlogViewSet(viewsets.ViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    def list(self, request):
-        queryset = Blog.objects.all()
-        serializer = BlogSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def create(self, request, format=None):
-        serializer = BlogSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def retrieve(self, request, pk=None):
-        queryset = Blog.objects.all()
-        blog = get_object_or_404(queryset, pk=pk)
-        serializer = BlogSerializer(blog)
-        return Response(serializer.data)
 
 class TagViewSet(viewsets.ViewSet):
     """
@@ -86,7 +64,6 @@ class PostViewSet(viewsets.ViewSet):
 
     def post(self, request, format=None):
         serializer = PostSerializer(data=request.data)
-
         if serializer.is_valid():
             post = serializer.save()
             for tag in request.data.get('tags'):
@@ -95,10 +72,22 @@ class PostViewSet(viewsets.ViewSet):
             return Response(serializer.data)
         return Response(serializer.errors)
 
+    def get_tags(self, *args, **kwargs):
+        tags = Tags.objects.all()
+        serializer = TagSerializer(tags, many=True)
+        return Response(serializer.data)
+
+    def get_object(self, pk):
+        try:
+            return Post.objects.all()
+        except Post.DoesNotexist:
+            raise Http404
+
     def retrieve(self, request, pk=None):
         queryset = Post.objects.all()
         post = get_object_or_404(queryset, pk=pk)
-        serializer = PostSerializer(post)
+        serializer_context = {'request': request}
+        serializer = PostSerializer(post, context=serializer_context)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
@@ -113,31 +102,3 @@ class PostViewSet(viewsets.ViewSet):
         post = self.get_object(pk)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-#class PostView(APIView):
-
-#    parser_classes = (JSONParser,)
-
-#    def post(self, request, format=None):
-#        return Response({ 'received data': request.data})
-
-#class PostList(APIView):
-    """
-    List all users, or create a new user.
-    """
-#    def get(self, request, format=None):
-#         posts = Post.objects.all()
-#         serializer = PostSerializer(post, many=True)
-#         return Response(serializer.data)
-
-#    def post(self, request, format=None):
-#         serializer = PostSerializer(data=request.DATA)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#    def delete(self, request, pk, format=None):
-#         post = self.get_object(pk)
-#         post.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)

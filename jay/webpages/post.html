@@ -1,53 +1,58 @@
 <!DOCTYPE html>
 <html>
-
-
   <head>
-    <script src="jquery.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Racing+Sans+One" rel="stylesheet">
     <title>Add Post</title>
   </head>
 
+
   <style type="text/css">
-#list{
-  background-color: #4ECDC4;
-}
 .card{
-    background-color: #4ECDC4;
+    background-color: #EEEEEE;
+    /*background-image: url(images/img3.jpg);*/
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
     max-width: 100px;
     margin-top: 20px;
+    font-size: 20px;
+    font color: #EEEEEE;
     margin-bottom: 20px;
+    margin-top: 5px;
     margin-right: 25px;
     margin-left:25px;
-    transition: 2s;
+    transition: 1s;
     border-radius: 30px;
     padding-left: 20px;
-    padding-right: 180px;
+    padding-right: 250px;
     padding-bottom:20px;
-    float: left;
+    float: right;
+    font-family: 'Racing Sans One', cursive;
 }
 p{
+  font-family: 'Fredericka the Great', cursive;
   text-align: center;
 }
 h1{
+  font-family: 'Fredericka the Great', cursive;
   text-align: center;
 }
 h2{
+  font-family: 'Fredericka the Great', cursive;
   text-align: center;
-  font-size: 32px;
+  font color: #EEEEEE;
+}
+html{
+  background-image: url(images/img19.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-</style>
-  <body>
-    <!-- <div id="container-postlist"></div>
-    <div id="container-tags"></div> -->
-    <!--div id="container-category"></div -->
-    <!-- <div id="container-postdetail"></div> -->
-    <!-- <div id="container-postcreate"></div> -->
+  </style>
+
+<body>
 <div class="card">
   <div class="container">
     <form  method="POST" id="postform" enctype="multipart/form-data">
-      <h2 class="form-signin-heading">Welcome, Add some post here</h2>
+      <h2 class="form-signin-heading">WELCOME</h2>
 
       <div>
         <label for="inputtitle" class="sr-only">Title</label>
@@ -59,11 +64,6 @@ h2{
         <input type="text" name="subtitle" class="form-control" placeholder="" required autofocus>
       </div>
 
-      <div>
-        <label for="inputblog" class="sr-only">Blog</label>
-        <input type="text" name="blog" class="form-control" placeholder="" required autofocus>
-      </div>
-
       <div class="thumbnails" style="width:400px;">
         <label class="cabinet BrandHeader">Banner Photo</label>
         <input type="file" class="file" name="banner_photo" id="test">
@@ -73,51 +73,74 @@ h2{
         <label class="cabinet BrandHeader">Body</label>
         <textarea class="form-control" name="body" placeholder="" required autofocus></textarea>
       </div>
-      
+
       <div>
         <label for="inputcategory" class="sr-only">Category</label>
-        <input type="text" name="category" class="form-control"  required autofocus>
-      </div>
-      
-      <div>
-        <label for="inputtags" class="sr-only">Tags</label>
-        <input type="text" name="tags" class="form-control"  required autofocus>
+        <select name="category" id="category"></select>
       </div>
 
       <div>
-        <label for="inputstatus" class="sr-only">Status</label>
-        <input type="text" name="status" class="form-control"  required autofocus>
+        <label for="inputtags" class="sr-only">Tags</label>
+        <select name="tags" id="tags" multiple></select>
+        <input type="text" name="tags" class="form-control" placeholder="" required autofocus>
+
+      </div>
+
+      <div>
+          <label for="inputstatus" class="sr-only">Status</label>
+          <select name="status">
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+            <option value="archive">Archive</option>
+          </select>
       </div>
 
       <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form>
   </div>
 </div>
+</body>
 
-  
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery.form.js"></script>
+  <script type="text/javascript">
 
-<span id="result"></span>
-
-<script src="http://malsup.github.com/jquery.form.js"></script> 
-<script type="text/javascript">
-
-
-  function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-      var cookies = document.cookie.split(';');
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = jQuery.trim(cookies[i]);
-        if (cookie.substring(0, name.length + 1) == (name + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-          }
-        }
+  $.ajax({
+    type: 'GET',
+    // dataType: 'json',
+    url:'http://127.0.0.1:8000/tags/',
+    success : function(data) {
+      // console.log(data);
+      // $(document).ready(function(){
+      var tags = $("#tags");
+      // JSON.stringify(tags, data);
+      for (var i=0;i<=data.length-1;i++) {
+        console.log(data[i]);
+        // alert(JSON.stringify(data));
+        var list = (data[i]);
+        tags.append(
+            '<option value="' + list.id + '">' + list.title + '</option>'
+          );
+      };
     }
-    return cookieValue;
-  }
-  
+  });
 
+  $.ajax({
+    type: 'GET',
+    // dataType: 'json',
+    url:'http://127.0.0.1:8000/categories/',
+    success : function(data) {
+      var category = $("#category");
+
+      for (var i=0;i<=data.length-1;i++) {
+        console.log(data[i]);
+        var list = (data[i]);
+        category.append(
+            '<option value="' + list.id + '">' + list.title + '</option>'
+          );
+      };
+    }
+  });
 
   $('#submit').on('click', function (e) {
     e.preventDefault();
@@ -125,10 +148,15 @@ h2{
     $('#postform').ajaxSubmit({
       url: 'http://127.0.0.1:8000/posts/',
       type: 'POST',
-      success : function (resp) { console.log(resp); },
-      error : function (resp) { console.log(resp); },
+      success : function (resp) { 
+        console.log(resp);
+        $("#postform")[0].reset();
+      },
+      error : function (resp) 
+      {
+        console.log(resp);
+      }
     });
-    $("#postform")[0].reset();
   });
   </script>
 </body>

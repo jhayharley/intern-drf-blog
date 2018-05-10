@@ -1,18 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js">
 <title>Post Lists</title>
-<head></head>
-<link href="https://fonts.googleapis.com/css?family=Yeon+Sung" rel="stylesheet">
-  <style type="text/css">
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Lobster|Radley" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title></title>
+
+</head>
+
+  <body>
+    <div id="navbar">
+      <a class="active" href="javascript:void(0)">Home</a>
+      <a href="javascript:void(0)">News</a>
+      <a href="javascript:void(0)">Contact</a>
+    </div>
+      <div class="wrapper">
+        <ul class="slider">
+          <img src="images/img2.jpg" />
+          <img src="images/img16.jpg" />
+          <img src="images/img18.jpg" />
+        </ul>
+      </div>
+    <script src="js/jquery.js"></script>
+  <script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
+<script src="js/main.js"></script>
+
+    <!-- <body>
+      <div class="content">
+        <div class="content-inside">
+          content
+       </div>
+     </div>
+        <footer class="footer"></footer>
+    </body>
+  </body> -->
+
+<style type="text/css">
+        /*for post*/
 #list{
-  background-color: #4ECDC4;
+  background-color: white;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
   max-width: 3000px;
-  margin-top: 50px;
+  margin-top: 100px;
   margin-bottom: 20px;
   margin-right: 45px;
   margin-left:45px;
-  float: left;
+  float: center;
   transition: 2s;
   border-radius: 50px;
   padding-left: 20px;
@@ -21,13 +55,13 @@
 }
 img{
   float: center;
-  height: 300px;
-  width: 300px; 
-  margin-left: 500px;
+  height: 400px;
+  width: 1000px; 
+  margin-left: 30px;
 }
 p{
   text-align: center;
-  font-family: 'Yeon Sung', cursive;
+  font-family: 'Lobster', cursive;
   font-size: 20px;
   text-align: center;
 }
@@ -37,43 +71,125 @@ h1{
 h2{
   text-align: center;
 }
-  </style>
-  
-    <ul id="list"></ul>
-    <script src="jquery.js">
 
-  
-    </script>
-      <script type="text/javascript">
+/*for nav*/
+body {
+  text-align: center;
+  font-family: 'Radley', serif;
+  font-size: 15px;
+  text-align: center;
+  margin: 0px;
+}
+
+.header {
+  background-color: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+}
+
+#navbar {
+  overflow: hidden;
+  background-color: #446CB3
+;
+}
+
+#navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 10px 10px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+#navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#navbar a.active {
+  background-color: black;
+  color: white;
+}
+
+.content {
+  padding: 16px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 60px;
+}
+
+/*for footer*/
+html, body {
+  height: 100%;
+  margin: 0;
+}
+.content {
+  min-height: 100%;
+}
+.content-inside {
+  padding: 20px;
+  padding-bottom: 50px;
+}
+.footer {
+  height: 50px;
+  margin-top: -50px;
+}
+
+</style>
+
+  <script>
+    window.onscroll = function() {myFunction()};
+    var navbar = document.getElementById("navbar");
+    var sticky = navbar.offsetTop;
+      function myFunction() {
+        if (window.pageYOffset >= sticky) {
+         navbar.classList.add("sticky")
+         } 
+        else {
+        navbar.classList.remove("sticky");
+  }
+}
+</script>
+
+    <ul id="list"></ul>
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript">
 
         $.ajax({
           type:'GET',
-            dataType:'json',
-              url:'http://127.0.0.1:8000/posts/',
-                success:function(data){
-                  console.log(data)
-                  var mylist = $('#list')
-                  for (var i = 0; i < data.length ; i++) {
-                    console.log(data[i]);
-                    var list = (data[i]);
-                    console.log(list);
-                    mylist.append(
-
-                      '<h1>'+list.title+'</h1>',
-                      '<h1>'+list.subtitle+'</h1>',
-                      '<img src="'+list.banner_photo+'">',
-                      '<p>'+list.blog+'</p>',
-                      '<p>'+list.date_created+'</p>',
-                      '<p>'+list.date_modified+'</p>',
-                      '<p>'+list.tags+'</p>',
-                      '<p>'+list.category+'</p>',
-                      '<h2>'+list.body+'</h2>',
-                      '<p>'+list.status+'</p>');
+          datatype: 'json',
+          url:'http://127.0.0.1:8000/posts/',
+          success:function(data){
+            // JSON.stringify(data)
+            console.log(data)
+            var mylist = $('#list')
+              for (var i = 0; i < data.length ; i++) {
+              console.log(data[i]);
+              var list = (data[i]);
+              console.log(list);
+              mylist.append(
+                '<h1>'+list.title+'</h1>',
+                '<h1>'+list.subtitle+'</h1>',
+                '<img src="'+list.banner_photo+'">',
+                '<p>'+list.tags+'</p>',
+                '<p>'+list.category_name+'</p>',
+                '<p>'+list.body+'</p>',
+                '<p>'+list.status+'</p>',
+                '<p>'+list.date_created+'</p>',
+                '<p>'+list.date_modified+'</p>');
       }
     }
   }
 )
-    </script>
-  </div>
 
+    </script>
 </html>

@@ -1,15 +1,7 @@
 from rest_framework import serializers
-from .models import Blog, Tag, Category, Comment, Post
+from .models import Tag, Category, Comment, Post
 from django.utils.timesince import timesince
 
-class BlogSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Blog
-        fields = (
-            'heading',
-            'sub_heading'
-        )
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,6 +16,7 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = (
+            'id',
             'title',
             'date_created',
             'date_modified'
@@ -40,11 +33,10 @@ class CommentSerializer(serializers.ModelSerializer):
         )
 
 class PostSerializer(serializers.ModelSerializer):
-#    blog_name = serializers.SerializerMethodField()
+    #tags = serializers.StringRelatedField(many=True)
     date_display = serializers.SerializerMethodField()
     category_name = serializers.SerializerMethodField()
     timesince = serializers.SerializerMethodField()
-#    tags = TagSerializer(Tag, many=True)
 
     class Meta:
         model = Post
@@ -52,8 +44,6 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'subtitle',
             'banner_photo',
-            'blog',
-#            'blog_name',
             'date_created',
             'category_name',
             'date_modified',
@@ -68,11 +58,8 @@ class PostSerializer(serializers.ModelSerializer):
     def get_category_name(self, instance):
         return instance.category.title
 
-#    def get_blog_name(self, instance):
-#        return instance.blog.heading
-
     def get_date_display(self, instance):
-        return instance.date_created.strftime("%b d%, | at %M %p")
+        return instance.date_created.strftime("%b d%, %Y | at %I %M %p")
 
     def get_timesince(self, instance):
         return timesince(instance.date_modified) + "ago"

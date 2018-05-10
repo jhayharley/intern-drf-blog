@@ -4,10 +4,9 @@ from django.conf import settings
 from rest_framework import routers
 from blog import views
 from django.conf.urls.static import static
-from blog.views import BlogViewSet, TagViewSet, CategoryViewSet, CommentViewSet, PostViewSet
+from blog.views import TagViewSet, CategoryViewSet, CommentViewSet, PostViewSet
 
 router = routers.DefaultRouter()
-router.register(r'blogs', BlogViewSet, base_name='blogs')
 router.register(r'tags', TagViewSet, base_name='tags')
 router.register(r'categories', CategoryViewSet, base_name='categories')
 router.register(r'comments', CommentViewSet, base_name='comments')
